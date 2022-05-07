@@ -30,6 +30,14 @@ async function run(){
             res.send(item);
         });
 
+        app.delete('/item/:id', async(req, res) =>{
+            const id = req.params.id;
+            const query = {_id: ObjectId(id)};
+            const result = await itemcollection.deleteOne(query);
+            res.send(result);
+
+        });
+
     }
 
     finally{
