@@ -16,10 +16,11 @@ async function run(){
     try{
         await client.connect();
         const itemcollection = client.db('rideriot').collection('item');
+        
         app.get('/item', async(req, res) =>{
             const query = {};
         const cursor = itemcollection.find(query);
-        const items = await cursor.toArray();
+        const items = await cursor.limit(6).toArray();
         res.send(items);
         });
 
