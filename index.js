@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_pass}@cluster0.abv9u.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.abv9u.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function run(){
@@ -29,6 +29,18 @@ async function run(){
             const item = await itemcollection.findOne(query);
             res.send(item);
         });
+
+
+        app.post('/item', async(req, res) =>{
+            console.log(req.body)
+            const newItem =req.body;
+            const result = await itemcollection.insertOne(newItem);
+            res.send(result);
+        });
+
+
+
+
 
         app.delete('/item/:id', async(req, res) =>{
             const id = req.params.id;
